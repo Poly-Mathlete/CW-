@@ -15,7 +15,7 @@ def create_grid():
 def grid_add_new_tile_at_position(game_grid:List[List[int]], x , y):
     
     # we make a list of the available cases 
-    empty_cases_coordinates = [(i,j) for i in range(len(game_grid)) for j in range(len(game_grid)) if game_grid[i][j] == 0]
+    empty_cases_coordinates = [(i,j) for i in range(len(game_grid)) for j in range(len(game_grid)) if game_grid[i][j] == '']
 
 
     if empty_cases_coordinates :
@@ -35,15 +35,36 @@ def grid_add_new_tile_at_position(game_grid:List[List[int]], x , y):
 
 
 def get_all_tiles(game_grid:List[List[int]]):
+    L = [[[0] *len(game_grid)] * len(game_grid)]
+    for i in range(len(game_grid)):
+        for j in range(len(game_grid)):
+            if game_grid[i][j] == '':
+                L.append(0)
+            else : 
+                L.append(game_grid[i][j])
+                           
+    return game_grid
 
-    # we return a list of tiles position
-    return [ (i,j) for i in range(len(game_grid)) for j in range(len(game_grid)) if game_grid[i][j] in  {2, 4} ] 
-
-
-
-def get_value_new_tile(game_grid:List[List[int]]):
     
-    return [ game_grid[i][j] for i,j in get_all_tiles(game_grid=create_grid())]
+
+    
+
+
+
+def get_value_new_tile(): 
+        #we initiate the value with 0
+        tile_value = 0
+
+        # Si la valeur est inférieure à 0.9, choisir la tuile 2
+        rand_val = random.random()
+        if rand_val < 0.9:
+            tile_value= 2
+        
+        # Si la valeur est supérieur à 0.2, choisir la tuile 4
+        else:
+            tile_value = 4
+
+
 
 
 
