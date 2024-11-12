@@ -1,0 +1,8 @@
+from game2048 import create_grid , grid_add_new_tile_at_position
+
+from pytest import *
+
+def test_grid_add_new_tile_at_position():
+    game_grid=create_grid(4)
+    game_grid=grid_add_new_tile_at_position(game_grid,1,1)
+    assert game_grid==[[' ',' ',' ', ' '],[' ', 2 ,' ', ' '],[' ',' ',' ', ' '],[' ',' ',' ', ' ']]
