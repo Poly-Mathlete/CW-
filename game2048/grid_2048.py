@@ -55,3 +55,50 @@ def init_game(n=4):
     grid = grid_add_new_tile(grid)
     grid = grid_add_new_tile(grid)
     return grid
+
+def grid_to_string_with_size(grid,n=4):
+    n = len(grid)
+    a = ' ==='
+    for k in range(n-1):
+        a+= ' ==='
+    a+= '\n'
+    for i in range(n):
+        for j in range(n):
+            a+= '| ' + str(grid[i][j]) + ' '
+        a+= '|\n'
+
+        for l in range(n):
+            a+= ' ==='
+        a+='\n'
+    a+= '   '
+    return a
+
+def long_value(grid):
+    L = get_all_tiles(grid)
+    S = [len(str(L[i])) for i in range(len(grid))]
+    return max(S)
+    
+def long_value_with_theme(grid,d):
+    L = get_all_tiles(grid)
+    S = [len(d[L[i]]) for i in range(len(L))]
+    return max(S)
+
+def grid_to_string_with_size_and_theme(grid,d, n=4):
+    n = len(grid)
+    m = long_value_with_theme(grid,d)
+    a = '===='
+    for k in range(n-1):
+        a+= '==='
+    a+= '\n'
+    for i in range(n):
+        for j in range(n):
+            a+= '|' + d[grid[i][j]]
+            k = len(d[grid[i][j]])
+            if k!=m :
+                for g in range(m-k):
+                    a+= ' '
+        a+= '|\n='
+        for l in range(n):
+            a+= '==='
+        a+='\n'
+    return a[:-1]
