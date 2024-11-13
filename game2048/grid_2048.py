@@ -13,8 +13,27 @@ def create_grid(n = 4) -> List[List[Optional[int]]]:
     """
     return [[None for _ in range(n)] for _ in range(n)]
 
+def grid_add_new_tile_at_position(game_grid: List[List[Optional[int]]], x: int, y: int) -> List[List[Optional[int]]]:
+    """
+    Ajoute la valeur 2 ou 4 à la position donnée dans la grille.
+    
+    Args:
+        game_grid (List[List[Optional[int]]]): La grille de jeu actuelle.
+        x (int): La position x où la nouvelle valeur sera ajoutée.
+        y (int): La position y où la nouvelle valeur sera ajoutée.
+        
+    Returns:
+        List[List[Optional[int]]]: La grille de jeu mise à jour avec le nouveau nombre ajouté.
+    """
+    # Choisir 2 (90% de chance) ou 4 (10% de chance)
+    new_tile_value = 2 if random.random() < 0.9 else 4
+    game_grid[x][y] = new_tile_value
+    
+    return game_grid
 
-def add_new_tile(game_grid: List[List[Optional[int]]]) -> None:
+
+
+def grid_add_new_tile(game_grid: List[List[Optional[int]]]) -> None:
     """
     Ajoute une nouvelle tuile de valeur 2 ou 4 à une position vide aléatoire de la grille.
     La valeur 2 est choisie avec une probabilité de 90%, sinon la valeur est 4.
@@ -96,7 +115,7 @@ def grid_get_value(game_grid: List[List[Optional[int]]], x: int, y: int) -> Opti
     """
     return get_all_tiles(game_grid)[x][y]
 
-def get_new_postion(game_grid: List[List[Optional[int]]]) -> List[List[int]]:
+def get_new_position(game_grid: List[List[Optional[int]]]) -> List[List[int]]:
     """
       Retourne aléatoirement une position vide de la grille.
     
