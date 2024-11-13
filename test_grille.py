@@ -1,4 +1,10 @@
-from game2048 import create_grid , grid_add_new_tile_at_position , get_all_tiles,get_value_new_tile
+from game2048.grid_2048 import *
+import pytest 
+
+
+def test_create_grid():
+    assert create_grid() == [[' ',' ',' ', ' '],[' ',' ',' ', ' '],[' ',' ',' ', ' '],[' ',' ',' ', ' ']]
+
 
 from pytest import *
 
@@ -16,4 +22,3 @@ def test_get_all_tiles():
     assert get_all_tiles( [[' ',4,8,2], [' ',' ',' ',' '], [' ',512,32,64], [1024,2048,512, ' ']]) == [0,4,8,2,0,0,0,0,0,512,32,64, 1024,2048,512,0]
     assert get_all_tiles([[16,4,8,2], [2,4,2,128], [4,512,32,64], [1024,2048,512,2]]) == [16, 4, 8, 2, 2, 4, 2, 128, 4, 512, 32, 64, 1024, 2048, 512, 2]
     assert get_all_tiles(create_grid(3))== [0 for i in range(9)]
-
