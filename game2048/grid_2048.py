@@ -139,4 +139,4 @@ def init_game(n : int ) -> List[List[Optional[int]]]:
         List[List[Optional[int]]]: Une liste de listes représentant la grille.
 
     """
-    get_all_tiles(add_new_tile(create_grid(n)))
+    get_all_tiles(grid_add_new_tile(create_grid(n)))
