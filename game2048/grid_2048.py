@@ -392,3 +392,21 @@ def move_grid(grid: List[List[Optional[int]]], direction: str) -> List[List[Opti
     
     return grid
 
+import numpy as np
+
+def is_grid_full(grid) -> bool:
+    """
+    Vérifie si la grille est pleine en recherchant des cases vides (0 ou espace).
+    
+    Args:
+        grid (List[List[Optional[int]]]): Grille de jeu 2D.
+
+    Returns:
+        bool: True si la grille est pleine, sinon False.
+    """
+    # Convertir la grille en un tableau NumPy pour les opérations vectorisées
+    grid_np = np.array(grid)
+    
+    # Vérifier s'il y a des cases vides (0 ou ' ')
+    return not np.any((grid_np == 0) | (grid_np == ' '))
+
