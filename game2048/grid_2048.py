@@ -156,24 +156,46 @@ def init_game(n: int) -> List[List[Optional[int]]]:
     return grid
 
 
-def grid_to_string_with_size(grid:List[List[Optional[int]]],n:int=4) -> str :
-    """
-    Retourne la grille de jeu sous forme de chaîne avec la taille spécifiée.
+# def grid_to_string_with_size(grid:List[List[Optional[int]]],n:int=4) -> str :
+#     """
+#     Retourne la grille de jeu sous forme de chaîne avec la taille spécifiée.
 
-    Args:
-        grid (List[List[int]]): La grille de jeu.
-        n (int): La taille de la grille (par défaut 4).
+#     Args:
+#         grid (List[List[int]]): La grille de jeu.
+#         n (int): La taille de la grille (par défaut 4).
         
-    Returns:
-        str: Représentation en chaîne de la grille.
-    """
-    a = ' ===' * n + '\n'  # Ligne du haut de la grille
+#     Returns:
+#         str: Représentation en chaîne de la grille.
+#     """
+#     a = ' ===' * n + '\n'  # Ligne du haut de la grille
+#     for i in range(n):
+#         for j in range(n):
+#             a += '| ' + str(grid[i][j]) + ' '  # Ajouter la valeur de chaque cellule
+#         a += '|\n'
+#         a += ' ===' * n + '\n'  # Ligne de séparation après chaque ligne de la grille
+
+#     return a
+
+def grid_to_string_with_size(grid,n=4):
+    n = len(grid)
+    a = ' ==='
+    for k in range(n-1):
+        a+= ' ==='
+    a+= '\n'
     for i in range(n):
         for j in range(n):
-            a += '| ' + str(grid[i][j]) + ' '  # Ajouter la valeur de chaque cellule
-        a += '|\n'
-        a += ' ===' * n + '\n'  # Ligne de séparation après chaque ligne de la grille
+            a+= '| ' + str(grid[i][j]) + ' '
+            m = long_value_with_theme(grid)
+            if k!=m :
+                for g in range(m-k):
+                    a+= ' '
+        a+= '|\n'
 
+
+        for l in range(n):
+            a+= ' ==='
+        a+='\n'
+    a+= '   '
     return a
 
 
@@ -188,7 +210,7 @@ def long_value_with_theme( grid:List[List[Optional[int]]] , d: dict ) -> int :
         int: La longueur maximale des valeurs dans la grille.
     """
     L = get_all_tiles(grid)  # Aplatir la grille et remplacer les cases vides par 0
-    S = [len(str(val)) for val in L]  # Calculer la longueur de chaque valeur de la liste aplatie
+    S = [len(d[L[i]]) for i in range(len(L))]  # Calculer la longueur de chaque valeur de la liste aplatie
     return max(S)  # Retourner la longueur maximale
 
 def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict, n: int = 4) -> str:
