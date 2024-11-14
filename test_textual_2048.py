@@ -23,6 +23,14 @@ def test_read_player_command(obj):
     assert result == 'g'
 
 
+def test_read_size_grid(obj):
+    mock_input_return(obj , 5)
+    result = read_size_grid()
+    assert result == 5
+
+
+def test_read_theme_grid(obj):
+
 
 
 
