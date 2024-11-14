@@ -11,7 +11,7 @@ def create_grid(n = 4) -> List[List[Optional[int]]]:
     Returns:
         List[List[Optional[int]]]: Une liste de listes représentant la grille, initialisée avec des valeurs ''.
     """
-    return [['' for _ in range(n)] for _ in range(n)]
+    return [[' ' for _ in range(n)] for _ in range(n)]
 
 def grid_add_new_tile_at_position(game_grid: List[List[Optional[int]]], x: int, y: int) -> List[List[Optional[int]]]:
     """
@@ -45,7 +45,7 @@ def grid_add_new_tile(game_grid: List[List[Optional[int]]]) -> None :
         None : La fonction modifie directement la grille sans retourner de valeur.
     """
     # Récupère les positions vides dans la grille
-    empty_tiles = [(i, j) for i in range(len(game_grid)) for j in range(len(game_grid[i])) if game_grid[i][j] is '']
+    empty_tiles = [(i, j) for i in range(len(game_grid)) for j in range(len(game_grid[i])) if game_grid[i][j] is ' ']
     
     # Si aucune position vide n'est disponible, termine la fonction
     if not empty_tiles:
@@ -80,7 +80,7 @@ def get_all_tiles(game_grid: List[List[Optional[int]]]) -> List[List[int]]:
         List[List[int]]: Une copie de la grille avec les cases vides remplacées par 0.
     """
     # Crée une copie de la grille en remplaçant '' par 0 pour chaque cellule
-    return [[cell if cell is not '' else 0 for cell in row] for row in game_grid]
+    return [[cellule if cellule != ' ' else 0 for cellule in row] for row in game_grid]
 
 def get_empty_tiles_positions(game_grid: List[List[Optional[int]]]) -> List[Tuple[int, int]]:
     """
