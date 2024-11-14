@@ -191,3 +191,36 @@ def long_value_with_theme( grid:List[List[Optional[int]]]) -> int :
     S = [len(str(val)) for val in L]  # Calculer la longueur de chaque valeur de la liste aplatie
     return max(S)  # Retourner la longueur maximale
 
+def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict, n: int = 4) -> str:
+    """
+    Retourne une représentation sous forme de chaîne de la grille de jeu avec un thème et un ajustement de taille des cellules.
+    
+    Args:
+        grid (List[List[Optional[int]]]): La grille de jeu.
+        d (dict): Un dictionnaire où les clés sont les valeurs de la grille et les valeurs sont des représentations sous forme de chaînes (thème).
+        n (int, optional): La taille de la grille, par défaut 4.
+    
+    Returns:
+        str: La chaîne représentant la grille avec le thème appliqué et les cellules de taille ajustée.
+    """
+    m = long_value_with_theme(grid, d)  # Obtenez la longueur maximale de la valeur avec le thème
+    a = '====' * n + '\n'  # Créez la ligne supérieure de la grille
+
+    # Créez la grille ligne par ligne
+    for i in range(n):
+        for j in range(n):
+            # Ajouter la valeur dans la case avec son thème appliqué
+            cell_value = d.get(grid[i][j], ' ')  # Applique le thème ou un espace si la valeur est absente
+            a += f'| {cell_value}'
+            
+            # Calculer l'espace manquant pour aligner les cellules
+            k = len(cell_value)
+            if k != m:
+                a += ' ' * (m - k)  # Ajouter des espaces pour égaliser la largeur des cellules
+                
+        a += ' |\n'  # Fermer la ligne de la grille
+        
+        # Ajouter la ligne de séparation
+        a += '====' * n + '\n'
+    
+    return a[:-1]  # Supprimer le dernier caractère inutile
