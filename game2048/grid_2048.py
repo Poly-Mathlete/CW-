@@ -261,3 +261,23 @@ def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict,
 
     # Retourner la chaîne sans le dernier caractère de séparation supplémentaire
     return a[:-1]
+
+
+''' ~ MAINTENANT ON VA CODER LES MOUVEMENTS ~ '''
+
+def move_row_left(row : list) -> list :
+    # on cree notre nouvelle ligne    
+    non_nul = [i for i in row if i != 0]
+    n = len(row)
+    m = len(non_nul)
+    merged = [False] * len(non_nul)
+    for i in range(1,m):
+        if non_nul[m-i] == non_nul[m-i-1] and not merged[m-i] and not merged[m-i-1] : 
+            non_nul[m-i-1] *= 2
+            non_nul[m-i] = 0
+            merged[m-i] = True 
+            merged[m-i-1] = True
+            
+    L = non_nul.extend([0]* (n-len(non_nul)))
+    
+
