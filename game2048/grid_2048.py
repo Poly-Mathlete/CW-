@@ -177,7 +177,7 @@ def grid_to_string_with_size(grid:List[List[Optional[int]]],n:int=4) -> str :
     return a
 
 
-def long_value_with_theme( grid:List[List[Optional[int]]]) -> int :
+def long_value_with_theme( grid:List[List[Optional[int]]] , d: dict ) -> int :
     """
     Calcule la longueur maximale des valeurs dans la grille de jeu après avoir aplati la grille.
     
