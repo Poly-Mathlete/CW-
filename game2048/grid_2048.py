@@ -65,7 +65,12 @@ def grid_to_string_with_size(grid,n=4):
     for i in range(n):
         for j in range(n):
             a+= '| ' + str(grid[i][j]) + ' '
+            m = long_value(grid)
+            if k!=m :
+                for g in range(m-k):
+                    a+= ' '
         a+= '|\n'
+
 
         for l in range(n):
             a+= ' ==='
