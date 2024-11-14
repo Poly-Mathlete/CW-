@@ -1,5 +1,6 @@
 
 import random
+import numpy as np
 from typing import List, Tuple, Optional
 
 
@@ -218,7 +219,7 @@ def long_value_with_theme( grid:List[List[Optional[int]]] , d: dict ) -> int :
     S = [len(d[L[i]]) for i in range(len(L))]  # Calculer la longueur de chaque valeur de la liste aplatie
     return max(S)  # Retourner la longueur maximale
 
-def grid_to_string_with_size_and_theme(grid, d, n=4):
+def grid_to_string_with_size_and_theme(grid:List[List[Optional[int]]], d: dict , n : int = 4):
     """
     Fonction qui génère une chaîne de caractères représentant une grille avec 
     des valeurs formatées selon un thème donné.
@@ -285,27 +286,109 @@ def move_row_left(row: list) -> list:
     # Longueur de la ligne d'origine
     n = len(row)
     
-    # Nombre d'éléments non nuls
-    m = len(non_nul)
-    
     # Liste pour suivre les éléments qui ont été fusionnés
     merged = [False] * len(non_nul)
 
     # Parcours des éléments non nuls pour effectuer les fusions
-    for i in range(1, m):
-        # Fusionner les éléments identiques et non fusionnés
-        if non_nul[m - i] == non_nul[m - i - 1] and not merged[m - i] and not merged[m - i - 1]:
-            # Doubler la valeur de l'élément précédent
-            non_nul[m - i - 1] *= 2
-            # on eliminie l'autre element 
-            non_nul=  non_nul[:m-i] + non_nul[m-i+1:]
-            # Marquer les éléments comme fusionnés
-            merged[m - i] = True
-            merged[m - i - 1] = True
+    i = 0
+    while i < len(non_nul) - 1:
+        # Si les éléments sont identiques et non fusionnés
+        if non_nul[i] == non_nul[i + 1] and not merged[i] and not merged[i + 1]:
+            # Fusionner les éléments
+            non_nul[i] *= 2
+            non_nul[i + 1] = 0
+            merged[i] = True  # Marquer comme fusionné
+            merged[i + 1] = True
+            i += 1  # Passer à l'élément suivant après la fusion
+        i += 1
+
+    # Filtrer à nouveau pour enlever les zéros (en cas de fusion)
+    non_nul = [i for i in non_nul if i != 0]
 
     # Compléter la liste avec des zéros pour revenir à la taille d'origine
     L_to_left = non_nul + [0] * (n - len(non_nul))
 
     return L_to_left
 
+def move_row_right(row: list) -> list:
+    """
+    Cette fonction simule le mouvement d'une ligne vers la droite dans un jeu comme 2048.
+    Les éléments non nuls se déplacent vers la droite et les éléments identiques se fusionnent 
+    (se multiplient par 2) si cela n'a pas déjà été fait.
+
+    Args:
+        row (list): Une ligne du jeu représentée par une liste d'entiers (0 pour une case vide).
+
+    Returns:
+        list: La nouvelle ligne après le mouvement vers la droite.
+    """
+    # Filtrer les éléments non nuls
+    non_nul = [i for i in row if i != 0]
+    
+    # Longueur de la ligne d'origine
+    n = len(row)
+    
+    # Liste pour suivre les éléments qui ont été fusionnés
+    merged = [False] * len(non_nul)
+
+    # Parcours des éléments non nuls de droite à gauche pour effectuer les fusions
+    i = len(non_nul) - 1
+    while i > 0:
+        # Si les éléments sont identiques et non fusionnés
+        if non_nul[i] == non_nul[i - 1] and not merged[i] and not merged[i - 1]:
+            # Fusionner les éléments
+            non_nul[i] *= 2
+            non_nul[i - 1] = 0
+            merged[i] = True  # Marquer comme fusionné
+            merged[i - 1] = True
+            i -= 1  # Passer à l'élément suivant après la fusion
+        i -= 1
+
+    # Filtrer à nouveau pour enlever les zéros (en cas de fusion)
+    non_nul = [i for i in non_nul if i != 0]
+
+    # Compléter la liste avec des zéros à gauche pour revenir à la taille d'origine
+    L_to_right = [0] * (n - len(non_nul)) + non_nul
+
+    return L_to_right
+
+
+def move_grid(grid: List[List[Optional[int]]], direction: str) -> List[List[Optional[int]]]:
+    """
+    Simule le mouvement d'une grille dans une direction donnée ('l', 'r', 'u', 'd') pour un jeu de type 2048.
+    
+    Args:
+        grid (List[List[Optional[int]]]): La grille du jeu représentée par une liste de listes d'entiers.
+        direction (str): La direction du mouvement ('l' pour gauche, 'r' pour droite, 'u' pour haut, 'd' pour bas).
+
+    Returns:
+        List[List[Optional[int]]]: La grille après l'application du mouvement.
+    """
+    directions = {"l": "left", "r": "right", "u": "up", "d": "down"}
+    
+    if direction[0] not in directions:
+        print("La direction saisie n'est pas valide. Veuillez entrer une direction parmi 'l', 'r', 'u' ou 'd'.")
+        return grid
+
+    if direction[0] == 'l':
+        for j in range(len(grid)):
+            grid[j] = move_row_left(grid[j]) 
+
+    elif direction[0] == 'r':
+        for j in range(len(grid)):
+            grid[j] = move_row_right(grid[j]) 
+
+    elif direction[0] == 'u':
+        transposed_grid = np.array(grid).T.tolist()
+        for j in range(len(transposed_grid)):
+            transposed_grid[j] = move_row_left(transposed_grid[j])
+        grid[:] = np.array(transposed_grid).T.tolist()
+
+    elif direction[0] == 'd':
+        transposed_grid = np.array(grid).T.tolist()
+        for j in range(len(transposed_grid)):
+            transposed_grid[j] = move_row_right(transposed_grid[j])
+        grid[:] = np.array(transposed_grid).T.tolist()
+    
+    return grid
 
