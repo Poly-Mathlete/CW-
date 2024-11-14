@@ -154,3 +154,40 @@ def init_game(n: int) -> List[List[Optional[int]]]:
 
     
     return grid
+
+
+def grid_to_string_with_size(grid:List[List[Optional[int]]],n:int=4) -> str :
+    """
+    Retourne la grille de jeu sous forme de chaîne avec la taille spécifiée.
+
+    Args:
+        grid (List[List[int]]): La grille de jeu.
+        n (int): La taille de la grille (par défaut 4).
+        
+    Returns:
+        str: Représentation en chaîne de la grille.
+    """
+    a = ' ===' * n + '\n'  # Ligne du haut de la grille
+    for i in range(n):
+        for j in range(n):
+            a += '| ' + str(grid[i][j]) + ' '  # Ajouter la valeur de chaque cellule
+        a += '|\n'
+        a += ' ===' * n + '\n'  # Ligne de séparation après chaque ligne de la grille
+
+    return a
+
+
+def long_value_with_theme( grid:List[List[Optional[int]]]) -> int :
+    """
+    Calcule la longueur maximale des valeurs dans la grille de jeu après avoir aplati la grille.
+    
+    Args:
+        grid (List[List[Optional[int]]]): La grille de jeu (listes de listes contenant des entiers ou None).
+        
+    Returns:
+        int: La longueur maximale des valeurs dans la grille.
+    """
+    L = get_all_tiles(grid)  # Aplatir la grille et remplacer les cases vides par 0
+    S = [len(str(val)) for val in L]  # Calculer la longueur de chaque valeur de la liste aplatie
+    return max(S)  # Retourner la longueur maximale
+
