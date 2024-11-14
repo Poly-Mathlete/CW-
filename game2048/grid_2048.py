@@ -454,6 +454,16 @@ def is_game_over(grid : list[list[Optional[int]]]) -> bool:
     return is_grid_full(grid) and not move_possible(grid)
                  
 def get_grid_max_value(grid : list[list[Optional[int]]]) -> int :
-    np_grid = np.array(grid)
+    """
+    Retourne la valeur maximale dans la grille de jeu 2D.
+    
+    Args:
+        grid (list[list[Optional[int]]]): La grille de jeu, représentée comme une liste de listes d'entiers.
 
-    return max(np_grid)
+    Returns:
+        int: La valeur maximale trouvée dans la grille.
+    """
+    grid_np = np.array(grid)
+    
+    # Utiliser np.max() pour obtenir la valeur maximale dans l'ensemble de la grille
+    return np.max(grid_np)
