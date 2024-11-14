@@ -185,7 +185,7 @@ def grid_to_string_with_size(grid,n=4):
     for i in range(n):
         for j in range(n):
             a+= '| ' + str(grid[i][j]) + ' '
-            m = long_value_with_theme(grid)
+            m = long_value(grid)
             if k!=m :
                 for g in range(m-k):
                     a+= ' '
@@ -198,6 +198,10 @@ def grid_to_string_with_size(grid,n=4):
     a+= '   '
     return a
 
+def long_value(grid):
+    L = get_all_tiles(grid)
+    S = [len(str(L[i])) for i in range(len(grid))]
+    return max(S)
 
 def long_value_with_theme( grid:List[List[Optional[int]]] , d: dict ) -> int :
     """
