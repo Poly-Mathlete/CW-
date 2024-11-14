@@ -236,7 +236,7 @@ def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict,
     m = long_value_with_theme(grid, d)
     
     # Initialisation de la chaîne avec les séparateurs de ligne
-    a = '===='
+    a = '============'  # 12 signes égal pour les séparateurs de ligne
     for k in range(n-1):
         a += '==='  # Ajouter des séparateurs pour chaque colonne
     a += '\n'  # Ajouter un saut de ligne à la fin de la première ligne
@@ -246,13 +246,13 @@ def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict,
         # Parcourir chaque colonne de la ligne
         for j in range(n):
             # Ajouter le thème associé à la valeur de la cellule
-            a += '|' + d[grid[i][j]]  # Représentation thématique de la cellule
+            a += '| ' + d[grid[i][j]]  # Représentation thématique de la cellule
             k = len(d[grid[i][j]])  # Longueur du texte de la cellule
             # Ajouter des espaces pour uniformiser la taille des cellules
             if k != m:
                 for g in range(m - k):  # Calculer l'espace manquant
                     a += ' '  # Ajouter l'espace nécessaire
-        a += '|\n='  # Fin de la ligne et ajout d'un séparateur
+        a += ' |\n'  # Fin de la ligne et ajout d'un séparateur
 
         # Ajouter les séparateurs de ligne après chaque ligne (sauf la dernière)
         for l in range(n):
