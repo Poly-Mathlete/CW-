@@ -94,3 +94,18 @@ def test_long_value_with_theme():
     
 
 
+def test_grid_to_string_with_size_and_theme():
+    grid=[[16, 4, 8, 2], [2, 4, 2, 128], [4, 512, 32, 64], [1024, 2048, 512, 2]]
+    a="""
+=============
+|Be|He|Li|H |
+=============
+|H |He|H |N |
+=============
+|He|F |B |C |
+=============
+|Ne|Na|F |H |
+=============
+"""
+    assert grid_to_string_with_size_and_theme(grid,THEMES["1"],4)== a[1:-1]
+    
