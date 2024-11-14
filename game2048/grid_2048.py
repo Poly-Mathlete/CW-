@@ -395,6 +395,7 @@ def move_grid(grid: List[List[Optional[int]]], direction: str) -> List[List[Opti
 import numpy as np
 
 def is_grid_full(grid) -> bool:
+
     """
     Vérifie si la grille est pleine en recherchant des cases vides (0 ou espace).
     
@@ -410,3 +411,31 @@ def is_grid_full(grid) -> bool:
     # Vérifier s'il y a des cases vides (0 ou ' ')
     return not np.any((grid_np == 0) | (grid_np == ' '))
 
+import numpy as np
+
+def move_possible(grid) -> list:
+    """
+    Vérifie si un mouvement est possible dans la grille dans toutes les directions (gauche, droite, haut, bas).
+    
+    Args:
+        grid (List[List[Optional[int]]]): Grille de jeu 2D.
+        
+    Returns:
+        list: Liste de booléens indiquant si un mouvement est possible dans chaque direction [gauche, droite, haut, bas].
+    """
+    # Convertir la grille en un tableau NumPy pour les opérations vectorisées ( la vecotrization optimise le temps ;) 
+    grid_np = np.array(grid)
+
+    # Vérifier si un mouvement est possible pour une ligne ou une colonne donnée
+    def can_move(line: np.ndarray) -> bool:
+        # Un mouvement est possible si des éléments adjacents sont égaux ou s'il y a des cases vides (0)
+        return np.any(line[:-1] == line[1:]) or np.any(line == 0)
+
+    # Vérifier les mouvements possibles dans chaque direction
+    left = np.any(np.apply_along_axis(can_move, axis=1, arr=grid_np))
+    right = np.any(np.apply_along_axis(can_move, axis=1, arr=grid_np[:, ::-1]))
+    up = np.any(np.apply_along_axis(can_move, axis=0, arr=grid_np.T))
+    down = np.any(np.apply_along_axis(can_move, axis=0, arr=grid_np[::-1].T))
+
+    # Retourner la liste des résultats pour chaque direction [gauche, droite, haut, bas]
+    return [left, right, up, down]
