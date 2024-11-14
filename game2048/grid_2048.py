@@ -265,19 +265,45 @@ def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict,
 
 ''' ~ MAINTENANT ON VA CODER LES MOUVEMENTS ~ '''
 
-def move_row_left(row : list) -> list :
-    # on cree notre nouvelle ligne    
+def move_row_left(row: list) -> list:
+    """
+    Cette fonction simule le mouvement d'une ligne vers la gauche dans un jeu comme 2048.
+    Les éléments non nuls se déplacent vers la gauche et les éléments identiques se fusionnent 
+    (se multiplient par 2) si cela n'a pas déjà été fait.
+
+    Args:
+        row (list): Une ligne du jeu représentée par une liste d'entiers (0 pour une case vide).
+
+    Returns:
+        list: La nouvelle ligne après le mouvement vers la gauche.
+    """
+    # Filtrer les éléments non nuls
     non_nul = [i for i in row if i != 0]
-    n = len(row)
-    m = len(non_nul)
-    merged = [False] * len(non_nul)
-    for i in range(1,m):
-        if non_nul[m-i] == non_nul[m-i-1] and not merged[m-i] and not merged[m-i-1] : 
-            non_nul[m-i-1] *= 2
-            non_nul[m-i] = 0
-            merged[m-i] = True 
-            merged[m-i-1] = True
-            
-    L = non_nul.extend([0]* (n-len(non_nul)))
     
+    # Longueur de la ligne d'origine
+    n = len(row)
+    
+    # Nombre d'éléments non nuls
+    m = len(non_nul)
+    
+    # Liste pour suivre les éléments qui ont été fusionnés
+    merged = [False] * len(non_nul)
+
+    # Parcours des éléments non nuls pour effectuer les fusions
+    for i in range(1, m):
+        # Fusionner les éléments identiques et non fusionnés
+        if non_nul[m - i] == non_nul[m - i - 1] and not merged[m - i] and not merged[m - i - 1]:
+            # Doubler la valeur de l'élément précédent
+            non_nul[m - i - 1] *= 2
+            # Remettre la case fusionnée à 0
+            non_nul[m - i] = 0
+            # Marquer les éléments comme fusionnés
+            merged[m - i] = True
+            merged[m - i - 1] = True
+
+    # Compléter la liste avec des zéros pour revenir à la taille d'origine
+    L_to_left = non_nul.extend([0] * (n - len(non_nul)))
+
+    return L_to_left
+
 
