@@ -156,47 +156,48 @@ def init_game(n: int) -> List[List[Optional[int]]]:
     return grid
 
 
-# def grid_to_string_with_size(grid:List[List[Optional[int]]],n:int=4) -> str :
-#     """
-#     Retourne la grille de jeu sous forme de chaîne avec la taille spécifiée.
 
-#     Args:
-#         grid (List[List[int]]): La grille de jeu.
-#         n (int): La taille de la grille (par défaut 4).
-        
-#     Returns:
-#         str: Représentation en chaîne de la grille.
-#     """
-#     a = ' ===' * n + '\n'  # Ligne du haut de la grille
-#     for i in range(n):
-#         for j in range(n):
-#             a += '| ' + str(grid[i][j]) + ' '  # Ajouter la valeur de chaque cellule
-#         a += '|\n'
-#         a += ' ===' * n + '\n'  # Ligne de séparation après chaque ligne de la grille
+def grid_to_string_with_size(grid:List[List[Optional[int]]], n : int = 4 ) -> str:
+    """
+    Retourne une chaîne représentant la grille avec une taille de cellule ajustée et 
+    des séparateurs pour chaque ligne et chaque colonne.
+    
+    Args:
+        grid (List[List[Optional[int]]]): La grille de jeu à formater.
+        n (int, optional): La taille de la grille (par défaut 4).
 
-#     return a
-
-def grid_to_string_with_size(grid,n=4):
-    n = len(grid)
-    a = ' ==='
+    Returns:
+        str: La grille formatée en chaîne de caractères avec des séparateurs et des cases.
+    """
+    # Définir le séparateur de ligne (les signes ===)
+    a = ' ==='  # Début de la première ligne
+    # Ajouter un séparateur de ligne pour chaque colonne sauf la dernière
     for k in range(n-1):
-        a+= ' ==='
-    a+= '\n'
+        a += ' ==='  # Ajouter un séparateur supplémentaire pour chaque colonne
+    a += '\n'  # Ajouter un saut de ligne à la fin de la première ligne
+
+    # Parcourir chaque ligne de la grille
     for i in range(n):
+        # Parcourir chaque élément de la ligne
         for j in range(n):
-            a+= '| ' + str(grid[i][j]) + ' '
-            m = long_value(grid)
-            if k!=m :
-                for g in range(m-k):
-                    a+= ' '
-        a+= '|\n'
+            # Ajouter le séparateur de colonne et la valeur de chaque cellule
+            a += '| ' + str(grid[i][j]) + ' '  # Convertir la valeur en chaîne et l'ajouter
+            m = long_value(grid)  # Longueur de la valeur maximale
+            # Ajouter des espaces si la cellule actuelle est plus petite que la taille maximale
+            if k != m:
+                for g in range(m-k):  # Calculer l'espace manquant
+                    a += ' '  # Ajouter les espaces nécessaires
+        a += '|\n'  # Fin de la ligne de la grille (après les valeurs des cellules)
 
-
+        # Ajouter les séparateurs de ligne après chaque ligne (sauf la dernière)
         for l in range(n):
-            a+= ' ==='
-        a+='\n'
-    a+= '   '
-    return a
+            a += ' ==='  # Séparateur de ligne
+        a += '\n'  # Nouvelle ligne après la ligne de séparation
+
+    # Ajouter des espaces à la fin (si nécessaire) et retourner le résultat
+    a += '   '
+    return a  # Retourner la chaîne construite représentant la grille
+
 
 def long_value(grid):
     L = get_all_tiles(grid)
