@@ -42,18 +42,19 @@ def grid_add_new_tile(game_grid: List[List[Optional[int]]]) -> None :
         game_grid (List[List[Optional[int]]]): La grille de jeu sous forme de liste de listes.
     
     Returns:
-        None : La fonction modifie directement la grille sans retourner de valeur.
+        None : La fonction modifie directement la grille et retourne la grille .
     """
     # Récupère les positions vides dans la grille
     empty_tiles = [(i, j) for i in range(len(game_grid)) for j in range(len(game_grid[i])) if game_grid[i][j] == ' ' or game_grid[i][j == 0]]
     
-    # Si aucune position vide n'est disponible, termine la fonction
+    # Si aucune position vide n'est disponible, retourne la grille
     if not empty_tiles:
-        return
+        return game_grid
 
     # Choisit aléatoirement une position vide et y ajoute une tuile avec une valeur de 2 (90%) ou de 4 (10%)
     x, y = random.choice(empty_tiles)
     game_grid[x][y] = 2 if random.random() < 0.9 else 4
+    return game_grid
 
 
 def get_value_new_tile() -> int:
