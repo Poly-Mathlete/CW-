@@ -218,48 +218,50 @@ def long_value_with_theme( grid:List[List[Optional[int]]] , d: dict ) -> int :
     S = [len(d[L[i]]) for i in range(len(L))]  # Calculer la longueur de chaque valeur de la liste aplatie
     return max(S)  # Retourner la longueur maximale
 
-def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict, n: int = 4) -> str:
+def grid_to_string_with_size_and_theme(grid, d, n=4):
     """
-    Retourne une représentation sous forme de chaîne de la grille de jeu avec un thème et un ajustement de taille des cellules.
-    
+    Fonction qui génère une chaîne de caractères représentant une grille avec 
+    des valeurs formatées selon un thème donné.
+
     Args:
-        grid (List[List[Optional[int]]]): La grille de jeu.
-        d (dict): Un dictionnaire où les clés sont les valeurs de la grille et les valeurs sont des représentations sous forme de chaînes (thème).
-        n (int, optional): La taille de la grille, par défaut 4.
-    
+        grid (list): La grille à afficher.
+        d (dict): Un dictionnaire qui mappe les valeurs de la grille à leurs représentations en texte.
+        n (int): La taille de la grille (par défaut 4).
+
     Returns:
-        str: La chaîne représentant la grille avec le thème appliqué et les cellules de taille ajustée.
+        str: Une chaîne de caractères formatée représentant la grille.
     """
-    n = len(grid)  # La taille de la grille (n x n)
+    # Calcul du nombre de caractères à utiliser pour les cases
+    n = len(grid)  # On redéfinit n à la taille de la grille
+    m = long_value_with_theme(grid, d)  # Longueur maximale de la valeur dans la grille en fonction du thème
+
+    # Initialisation de la chaîne avec les bords de la grille
+    a = '===='
+    for k in range(n - 1):
+        a += '==='  # Ajout des bords pour chaque colonne
     
-    # Obtenir la longueur maximale d'une valeur dans la grille en fonction du thème
-    m = long_value_with_theme(grid, d)
-    
-    # Initialisation de la chaîne avec les séparateurs de ligne
-    a = '============'  # 12 signes égal pour les séparateurs de ligne
-    for k in range(n-1):
-        a += '==='  # Ajouter des séparateurs pour chaque colonne
-    a += '\n'  # Ajouter un saut de ligne à la fin de la première ligne
-    
-    # Parcourir chaque ligne de la grille
+    a += '\n'
+
+    # Parcours des lignes de la grille
     for i in range(n):
-        # Parcourir chaque colonne de la ligne
         for j in range(n):
-            # Ajouter le thème associé à la valeur de la cellule
-            a += '| ' + d[grid[i][j]]  # Représentation thématique de la cellule
-            k = len(d[grid[i][j]])  # Longueur du texte de la cellule
-            # Ajouter des espaces pour uniformiser la taille des cellules
-            if k != m:
-                for g in range(m - k):  # Calculer l'espace manquant
-                    a += ' '  # Ajouter l'espace nécessaire
-        a += ' |\n'  # Fin de la ligne et ajout d'un séparateur
+            # Ajout de la valeur de la case courante en fonction du thème
+            a += '|' + d[grid[i][j]]
+            k = len(d[grid[i][j]])  # Longueur de la représentation en texte de la valeur
+            if k != m:  # Si la longueur est inférieure à la longueur maximale
+                for g in range(m - k):  # Ajouter des espaces pour égaliser la longueur
+                    a += ' '
 
-        # Ajouter les séparateurs de ligne après chaque ligne (sauf la dernière)
+        a += '|\n'  # Fin de la ligne
+
+        # Ajout des bords horizontaux pour chaque ligne
+        a += '='
         for l in range(n):
-            a += '==='  # Séparateur de ligne
-        a += '\n'  # Nouvelle ligne après les séparateurs
+            a += '==='  # Ajout des bords pour chaque colonne
 
-    # Retourner la chaîne sans le dernier caractère de séparation supplémentaire
+        a += '\n'
+
+    # Retourner la chaîne sans le dernier retour à la ligne supplémentaire
     return a[:-1]
 
 
@@ -295,14 +297,14 @@ def move_row_left(row: list) -> list:
         if non_nul[m - i] == non_nul[m - i - 1] and not merged[m - i] and not merged[m - i - 1]:
             # Doubler la valeur de l'élément précédent
             non_nul[m - i - 1] *= 2
-            # Remettre la case fusionnée à 0
-            non_nul[m - i] = 0
+            # on eliminie l'autre element 
+            non_nul=  non_nul[:m-i] + non_nul[m-i+1:]
             # Marquer les éléments comme fusionnés
             merged[m - i] = True
             merged[m - i - 1] = True
 
     # Compléter la liste avec des zéros pour revenir à la taille d'origine
-    L_to_left = non_nul.extend([0] * (n - len(non_nul)))
+    L_to_left = non_nul + [0] * (n - len(non_nul))
 
     return L_to_left
 
