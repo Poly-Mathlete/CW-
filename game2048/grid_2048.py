@@ -230,24 +230,34 @@ def grid_to_string_with_size_and_theme(grid: List[List[Optional[int]]], d: dict,
     Returns:
         str: La chaîne représentant la grille avec le thème appliqué et les cellules de taille ajustée.
     """
-    m = long_value_with_theme(grid, d)  # Obtenez la longueur maximale de la valeur avec le thème
-    a = '====' * n + '\n'  # Créez la ligne supérieure de la grille
-
-    # Créez la grille ligne par ligne
-    for i in range(n):
-        for j in range(n):
-            # Ajouter la valeur dans la case avec son thème appliqué
-            cell_value = d.get(grid[i][j], ' ')  # Applique le thème ou un espace si la valeur est absente
-            a += f'| {cell_value}'
-            
-            # Calculer l'espace manquant pour aligner les cellules
-            k = len(cell_value)
-            if k != m:
-                a += ' ' * (m - k)  # Ajouter des espaces pour égaliser la largeur des cellules
-                
-        a += ' |\n'  # Fermer la ligne de la grille
-        
-        # Ajouter la ligne de séparation
-        a += '====' * n + '\n'
+    n = len(grid)  # La taille de la grille (n x n)
     
-    return a[:-1]  # Supprimer le dernier caractère inutile
+    # Obtenir la longueur maximale d'une valeur dans la grille en fonction du thème
+    m = long_value_with_theme(grid, d)
+    
+    # Initialisation de la chaîne avec les séparateurs de ligne
+    a = '===='
+    for k in range(n-1):
+        a += '==='  # Ajouter des séparateurs pour chaque colonne
+    a += '\n'  # Ajouter un saut de ligne à la fin de la première ligne
+    
+    # Parcourir chaque ligne de la grille
+    for i in range(n):
+        # Parcourir chaque colonne de la ligne
+        for j in range(n):
+            # Ajouter le thème associé à la valeur de la cellule
+            a += '|' + d[grid[i][j]]  # Représentation thématique de la cellule
+            k = len(d[grid[i][j]])  # Longueur du texte de la cellule
+            # Ajouter des espaces pour uniformiser la taille des cellules
+            if k != m:
+                for g in range(m - k):  # Calculer l'espace manquant
+                    a += ' '  # Ajouter l'espace nécessaire
+        a += '|\n='  # Fin de la ligne et ajout d'un séparateur
+
+        # Ajouter les séparateurs de ligne après chaque ligne (sauf la dernière)
+        for l in range(n):
+            a += '==='  # Séparateur de ligne
+        a += '\n'  # Nouvelle ligne après les séparateurs
+
+    # Retourner la chaîne sans le dernier caractère de séparation supplémentaire
+    return a[:-1]
