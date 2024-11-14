@@ -133,16 +133,24 @@ def get_new_position(game_grid: List[List[Optional[int]]]) -> List[List[int]]:
     """
     return random.choice(get_empty_tiles_positions(game_grid))
 
-def init_game(n : int ) -> List[List[Optional[int]]]:
+def init_game(n: int) -> List[List[Optional[int]]]:
     """
-    Débute le jeux en créant  , la grille et la tuile .
+    Starts the game by creating the grid and adding an initial tile.
 
     Args:
-        
-        n (int): La taille de la grille . 
+        n (int): The size of the grid.
 
     Returns:
-        List[List[Optional[int]]]: Une liste de listes représentant la grille.
-
+        List[List[Optional[int]]]: A list of lists representing the grid with an initial tile.
     """
-    get_all_tiles(grid_add_new_tile(create_grid(n)))
+    # Create an empty grid
+    grid = create_grid(n)
+    
+    # Ajout de la première tuile
+    grid_add_new_tile(grid) 
+
+    # Ajout de la deuxième tuile 
+    grid_add_new_tile(grid) 
+
+    
+    return grid
