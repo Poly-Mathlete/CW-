@@ -79,6 +79,8 @@ def get_all_tiles(game_grid: List[List[Optional[int]]]) -> List[int]:
     Returns:
         List[int]: Une copie aplatie de la grille avec les cases vides remplacées par 0.
     """
+    if  game_grid is None :
+        game_grid = create_grid()
     # Remplace ' ' par 0 et aplatie la grille en une seule liste
     return [cellule if cellule != ' ' else 0 for row in game_grid for cellule in row]
 
