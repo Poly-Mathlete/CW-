@@ -45,7 +45,7 @@ def grid_add_new_tile(game_grid: List[List[Optional[int]]]) -> None :
         None : La fonction modifie directement la grille et retourne la grille .
     """
     # Récupère les positions vides dans la grille
-    empty_tiles = [(i, j) for i in range(len(game_grid)) for j in range(len(game_grid[i])) if game_grid[i][j] == ' ' or game_grid[i][j == 0]]
+    empty_tiles = [(i, j) for i in range(len(game_grid)) for j in range(len(game_grid[i])) if game_grid[i][j] == ' ' or game_grid[i][j] == 0]
     
     # Si aucune position vide n'est disponible, retourne la grille
     if not empty_tiles:
