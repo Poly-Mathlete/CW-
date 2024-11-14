@@ -392,7 +392,7 @@ def move_grid(grid: List[List[Optional[int]]], direction: str) -> List[List[Opti
     
     return grid
 
-import numpy as np
+
 
 def is_grid_full(grid) -> bool:
 
@@ -411,7 +411,6 @@ def is_grid_full(grid) -> bool:
     # Vérifier s'il y a des cases vides (0 ou ' ')
     return not np.any((grid_np == 0) | (grid_np == ' '))
 
-import numpy as np
 
 def move_possible(grid) -> list:
     """
@@ -439,3 +438,22 @@ def move_possible(grid) -> list:
 
     # Retourner la liste des résultats pour chaque direction [gauche, droite, haut, bas]
     return [left, right, up, down]
+
+
+def is_game_over(grid : list[list[Optional[int]]]) -> bool:
+    """
+    Cette fonction permet de vérifier si le jeux est terminé
+     Vérifie si la grille est pleine en recherchant des cases vides (0 ou espace).
+    
+    Args:
+        grid (List[List[Optional[int]]]): Grille de jeu 2D.
+
+    Returns:
+        bool: True si le jeux est terminé, sinon False. """
+    # vérifier si la grille est pleine et qu'il y a plus de mouvement possible 
+    return is_grid_full(grid) and not move_possible(grid)
+                 
+def get_grid_max_value(grid : list[list[Optional[int]]]) -> int :
+    np_grid = np.array(grid)
+
+    return max(np_grid)
