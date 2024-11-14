@@ -14,16 +14,18 @@ def read_player_command() -> str :
     return move
 
 
-def read_size_grid() -> int :
+def read_size_grid() -> int:
     """
-    Cette fonction va retourner le choix de taille fait par  l'utilisateur .
+    Cette fonction va retourner le choix de taille fait par l'utilisateur.
+    Elle vérifie que l'entrée est un entier valide.
+    """
+    while True:
+        try:
+            size = int(input("Entrez la taille :"))
+            return size  # Si la conversion réussit, retourne la taille
+        except ValueError:
+            print("La taille saisie n'est pas valide. Veuillez entrer un nombre entier.")
 
-    """
-    size =  (input("Entrez la taille :"))
-    while type(size) != int :
-        print("La taille saisie n'est pas valide.")
-        size =  (input("Entrez la taille :"))
-    return size
 
 def read_theme_grid() -> str:
     """

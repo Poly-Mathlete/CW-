@@ -30,6 +30,9 @@ def test_read_size_grid(obj):
 
 
 def test_read_theme_grid(obj):
+    mock_input_return(obj,0)
+    result = read_theme_grid()
+    assert result == 0
 
 
 
