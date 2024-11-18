@@ -1,7 +1,7 @@
 # colors.py
 
-GRID_COLOR = "#808080"
-EMPTY_CELL_COLOR = "#a39489"  # Correction ici
+GRID_COLOR = "#b0013c"
+EMPTY_CELL_COLOR = "#86769c"  # Correction ici
 SCORE_LABEL_FONT = ("Verdana", 24)
 SCORE_FONT = ("Helvetica", 36, "bold")
 GAME_OVER_FONT = ("Helvetica", 48, "bold")
